@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Sitio Web Inclusivo</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #fff;
+    color: #000;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0 1rem;
+  }
+  .high-contrast {
+    background-color: #000;
+    color: #fff;
+  }
+  header, nav, main, footer {
+    max-width: 800px;
+    margin: auto;
+  }
+  header {
+    padding: 1rem 0;
+  }
+  nav a {
+    margin-right: 1rem;
+    text-decoration: none;
+    color: inherit;
+  }
+  nav a:focus, nav a:hover {
+    outline: 2px solid #00f;
+  }
+  button {
+    margin: 1rem 0;
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+  }
+  .large-text {
+    font-size: 1.5rem;
+  }
+  form label {
+    display: block;
+    margin: 0.5rem 0 0.2rem;
+  }
+  form input, form textarea {
+    width: 100%;
+    padding: 0.4rem;
+    font-size: 1rem;
+  }
+  form input:focus, form textarea:focus {
+    outline: 2px solid #00f;
+  }
+  .error-message {
+    color: red;
+    font-size: 0.9rem;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Sitio Web Inclusivo</h1>
+  <nav aria-label="Menú principal">
+    <a href="#contenido-principal">Ir al contenido principal</a>
+    <a href="#formulario-contacto">Contacto</a>
+  </nav>
+  <button id="toggle-contrast">Modo alto contraste</button>
+  <button id="toggle-text-size">Aumentar tamaño de texto</button>
+</header>
+
+<main id="contenido-principal" tabindex="-1">
+  <section>
+    <h2>Bienvenidos</h2>
+    <p>Este sitio está diseñado para ser accesible y usable por personas con diferentes capacidades.</p>
+    <img src="https://via.placeholder.com/400x200" alt="Ejemplo de imagen con texto alternativo" />
+  </section>
+
+  <section>
+    <h2>Formulario de Contacto</h2>
+    <form id="formulario-contacto" aria-describedby="form-instrucciones" novalidate>
+      <p id="form-instrucciones">Por favor, complete el formulario para contactarnos.</p>
+      
+      <label for="nombre">Nombre:</label>
+      <input type="text" id="nombre" name="nombre" required aria-required="true" />
+      <span class="error-message" aria-live="polite" id="error-nombre"></span>
+
+      <label for="email">Correo electrónico:</label>
+      <input type="email" id="email" name="email" required aria-required="true" />
+      <span class="error-message" aria-live="polite" id="error-email"></span>
+
+      <label for="mensaje">Mensaje:</label>
+      <textarea id="mensaje" name="mensaje" rows="4" required aria-required="true"></textarea>
+      <span class="error-message" aria-live="polite" id="error-mensaje"></span>
+
+      <button type="submit">Enviar</button>
+    </form>
+  </section>
+</main>
+
+<footer>
+  <p>&copy; 2025 Sitio Web Inclusivo</p>
+</footer>
+
+<script>
+  const btnContrast = document.getElementById('toggle-contrast');
+  const btnTextSize = document.getElementById('toggle-text-size');
+  const body = document.body;
+
+  btnContrast.addEventListener('click', () => {
+    body.classList.toggle('high-contrast');
+  });
+
+  btnTextSize.addEventListener('click', () => {
+    body.classList.toggle('large-text');
+  });
+
+  // Simple form validation
+  const form = document.getElementById('formulario-contacto');
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    
+    let valid = true;
+
+    // Clear previous errors
+    document.getElementById('error-nombre').textContent = '';
+    document.getElementById('error-email').textContent = '';
+    document.getElementById('error-mensaje').textContent = '';
+
+    const nombre = form.nombre.value.trim();
+    const email = form.email.value.trim();
+    const mensaje = form.mensaje.value.trim();
+
+    if (!nombre) {
+      valid = false;
+      document.getElementById('error-nombre').textContent = 'El nombre es obligatorio.';
+    }
+    if (!email) {
+      valid = false;
+      document.getElementById('error-email').textContent = 'El correo electrónico es obligatorio.';
+    } else if (!email.includes('@')) {
+      valid = false;
+      document.getElementById('error-email').textContent = 'Por favor, ingrese un correo válido.';
+    }
+    if (!mensaje) {
+      valid = false;
+      document.getElementById('error-mensaje').textContent = 'El mensaje es obligatorio.';
+    }
+
+    if (valid) {
+      alert('Formulario enviado correctamente. ¡Gracias!');
+      form.reset();
+    }
+  });
+</script>
+
+</body>
+</html>
